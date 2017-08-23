@@ -1,0 +1,28 @@
+box:
+  id: alpine:3.5
+  cmd: /bin/sh
+
+ignore-file: .werckerignore
+
+build:
+  steps:
+    - script:
+        name: Build
+        code: echo "It's all good!"
+
+deploy:
+  steps:
+    - script:
+        name: Setup the container
+        code: >
+          apk --update --no-cache add python py-pip &&
+          pip install --upgrade pip &&
+          pip install awscli
+
+
+    - internal/docker-push:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+        tag: latest, $WERCKER_GIT_COMMIT
+        repository: abuecker/aws-cli
+        registry: https://registry.hub.docker.com
