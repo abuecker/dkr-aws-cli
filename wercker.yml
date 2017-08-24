@@ -7,8 +7,11 @@ ignore-file: .werckerignore
 build:
   steps:
     - script:
-        name: Build
-        code: echo "It's all good!"
+        name: Setup the container
+        code: >
+          apk --update --no-cache add python py-pip jq &&
+          pip install --upgrade pip &&
+          pip install awscli
 
 deploy:
   steps:
@@ -18,7 +21,6 @@ deploy:
           apk --update --no-cache add python py-pip jq &&
           pip install --upgrade pip &&
           pip install awscli
-
 
     - internal/docker-push:
         username: $DOCKER_USERNAME
