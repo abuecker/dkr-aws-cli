@@ -15,7 +15,7 @@ deploy:
     - script:
         name: Setup the container
         code: >
-          apk --update --no-cache add python py-pip &&
+          apk --update --no-cache add python py-pip jq &&
           pip install --upgrade pip &&
           pip install awscli
 
